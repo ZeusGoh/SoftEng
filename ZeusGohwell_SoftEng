@@ -1,3 +1,4 @@
+// Zeus Gohwell
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,55 +7,64 @@
 using namespace std;
 
 bool isValidSentence(const string& sentence) {
-    // Checking if the sentence starts with a capital letter
+
+    // check 1st character capital
+    // empty() is checking if the sentence variable are really empty
+    // check !isupper(sentence[0]) wether the first character of the sentence variable is capital or not
     if (sentence.empty() || !isupper(sentence[0])) return false;
 
-    // Checking for even number of quotation marks
-    int quoteCount = 0;
+    // check even number of quotation mark
+    int Count = 0; // placeholder for count total of ""
     for (char ch : sentence) {
-        if (ch == '"') quoteCount++;
+        if (ch == '"') Count++; // check if (ch == "") then add 1 to Count variable if it's true.
     }
-    if (quoteCount % 2 != 0) return false;
+    if (Count % 2 != 0) return false; // check if Count % 2 is not equal 0 then it will return false
 
-    // Checking if sentence ends with a ".", "?", or "!"
-    char lastChar = sentence.back();
+    // checking if sentence ends with a ".", "?", or "!"
+    char lastChar = sentence.back(); // refer to the last character of the variable sentence
     if (lastChar != '.' && lastChar != '?' && lastChar != '!') return false;
 
-    // Ensure no period characters other than the last character
-    for (int i = 0; i < sentence.length() - 1; i++) {
-        if (sentence[i] == '.') return false;
+    //ensure no period characters other than the last character
+    for (int i = 0; i < sentence.length() - 1; i++) { // indexing every part of the array except the last character
+        if (sentence[i] == '.') return false; // if every array that is checked contained "." then function return false
     }
 
-    // Check if numbers below 13 are spelled out
-    vector<string> numbersBelow13 = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"};
+    // check all the number spelled out
+    vector<string> numbersBelow13 = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve" };
     for (const string& num : numbersBelow13) {
         if (sentence.find(num) != string::npos) return false;
-    }
 
-    // If all checks pass
-    return true;
+        return true;
+    }
 }
 
-int main() {
-    // Test cases
-    vector<string> testSentences = {
-        "The quick brown fox said “hello Mr lazy dog”.",
+    int main() {
+        // testing
+        vector<string> testSentences = {
+        "The quick brown fox said \"hello Mr lazy dog\".",
         "The quick brown fox said hello Mr lazy dog.",
         "One lazy dog is too few, 13 is too many.",
         "One lazy dog is too few, thirteen is too many.",
         "How many \"lazy dogs\" are there?",
-        "The quick brown fox said \"hello Mr. lazy dog\".",
-        "the quick brown fox said “hello Mr lazy dog\".",
-        "\"The quick brown fox said “hello Mr lazy dog.\"",
-        "One lazy dog is too few, 12 is too many.",
-        "Are there 11, 12, or 13 lazy dogs?",
-        "There is no punctuation in this sentence"
-    };
+        "hello this is wrong",
+        "15 is more than 13.",
+        "This \" should be wrong."
+        };
+        // taking string from testSentences and put into sentence then input on function wether it is true or not.
+        for (const string& sentence : testSentences) {
+            cout << "Sentence: \"" << sentence << "\" is "
+                << (isValidSentence(sentence) ? "valid" : "invalid") << endl;
+        }
 
-    for (const string& sentence : testSentences) {
-        cout << "Sentence: \"" << sentence << "\" is "
-             << (isValidSentence(sentence) ? "valid" : "invalid") << endl;
+        return 0;
     }
 
-    return 0;
-}
+/*
+So the implementation of my program:
+-Vector: dynamic array so we can input the sentence how much we want.
+-Reference: allow to change the value of the parameter.
+-Bool Function: function will return ture when all of the characteristics are true.
+-IF, Else statement: making sure the properties are true if not it's false.
+-For loop: run a loop usually checking every index on an array and for adding an integer for some specialized requirement.
+-String: allowing string variables to be declared and initialized.
+*/
